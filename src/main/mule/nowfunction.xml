@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="a37b77fd-6912-42c9-85fa-a1814d09afc5" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="nowfunctionFlow" doc:id="7d655283-4495-4a7b-9eb9-867e503ff08a" >
+		<http:listener doc:name="Listener" doc:id="d6302679-f75a-4e69-88e6-036bcc2cbdee" config-ref="HTTP_Listener_config" path="/date"/>
+		<ee:transform doc:name="Transform Message" doc:id="71b4ea5c-144f-46fd-9cac-733f0ab78169" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+now()]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
